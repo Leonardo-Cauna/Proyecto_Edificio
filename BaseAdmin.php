@@ -12,58 +12,99 @@
 				<div class="container mt-5 text-center">
 					<h1 class = "card-header">Administradores</h1> 
 					<div class="card mt-2">
-						<input type = "submit" value = "Ingresar Nuevo Edificio" name= "edificio"></input><br>
-						<input type = "submit" value = "Eliminar Edificio" name="Bedificio"></input><br>
-						<input type = "submit" value = "Modificar Edificio" name="Medificio"></input><br>
-						<input type = "submit" value = "Ingresar Nuevo Encargado" name="encargado"></input><br>
-						<input type = "submit" value = "Eliminar Encargado" name="Bencargado"></input><br>
-						<button type = "submit" name= "cerrar">Cerrar Sesion</button>
+						<button name="boton" value="1">Ingresar Nuevo Edificio</button><br>
+						<button name="boton" value="2">Eliminar Edificio</button><br>
+						<button name="boton" value="3">Modificar Edificio</button><br>
+						<button name="boton" value="4">Ingresar Nuevo Encargado</button><br>
+						<button name="boton" value="5">Eliminar Encargado</button><br>
+						<button name="boton" value="6">Cerrar Sesion</button>
 					</div>
 				</div>
 			</form>
 		</body>
 	</html>
 	<?php
-		include("db.php");
-		include("IP.php");
-		$query = "SELECT Nombre FROM usuarios WHERE IP = '$ip' and Online = '1'";
-		$result = mysqli_query($conexion, $query);
-		while ($row = $result->fetch_assoc()) 
+		
+		if(isset($_POST['boton']))
 		{
-			$user = $row['Nombre'];
-		}
-		if(isset($_POST['edificio'])) 
-	    {
-	    	header("location:crearedificio.php");
-	    }
-	    if(isset($_POST['encargado'])) 
-	    {
-			header("location:crearencargado.php");
-	    }
-	    if(isset($_POST['Bencargado'])) 
-	    {
-			header("location:borrarencargados.php");
-	    }
-	    if(isset($_POST['Bedificio'])) 
-	    {
-			header("location:BorrarEdificios.php");
-	    }
-	    if(isset($_POST['Medificio'])) 
-	    {
-			header("location:ModificarEdificio.php");
-	    }
-	    if(isset($_POST['cerrar'])) 
-    	{
-			$usuario = $user;
-			echo $usuario;
-			$query = "UPDATE usuarios SET Online = '0' WHERE Nombre = '$usuario'";
-			$result = mysqli_query($conexion, $query) or die(mysql_error());
-			$query = "SELECT Online FROM usuarios WHERE Nombre = '$user'";
-			$result = mysqli_query($conexion, $query) or die(mysql_error());
-			while ($row = $result->fetch_assoc()) 
+			switch($_POST['boton'])
 			{
-				$user = $row['Online']."<br>";
+				default:
+					print($_POST['boton']);
+					break;
+				case 1:
+					header("location:crearedificio.php");
+					break;
+				case 2:
+					header("location:BorrarEdificios.php");
+					break;
+				case 3:
+					header("location:ModificarEdificio.php");
+					break;
+				case 4:
+					header("location:crearencargado.php");
+					break;
+				case 5:
+					header("location:borrarencargados.php");
+					break;
+				case 6:
+					include("db.php");
+					include("IP.php");
+					$query = "SELECT Nombre FROM usuarios WHERE IP = '$ip' and Online = '1'";
+					$result = mysqli_query($conexion, $query);
+					while ($row = $result->fetch_assoc()) 
+					{
+						$user = $row['Nombre'];
+					}
+					$usuario = $user;
+					echo $usuario;
+					$query = "UPDATE usuarios SET Online = '0' WHERE Nombre = '$usuario'";
+					$result = mysqli_query($conexion, $query) or die(mysql_error());
+					$query = "SELECT Online FROM usuarios WHERE Nombre = '$user'";
+					$result = mysqli_query($conexion, $query) or die(mysql_error());
+					while ($row = $result->fetch_assoc()) 
+					{
+						$user = $row['Online']."<br>";
+					}
+					header("location:Index.php");
+					break;
 			}
-			header("location:Index.php");
-    	}
+		}
+		
+			
+
+		// if(isset($_POST['edificio'])) 
+	    // {
+	    	
+	    // }
+	    // if(isset($_POST['encargado'])) 
+	    // {
+		// 	header("location:crearencargado.php");
+	    // }
+	    // if(isset($_POST['Bencargado'])) 
+	    // {
+		// 	header("location:borrarencargados.php");
+	    // }
+	    // if(isset($_POST['Bedificio'])) 
+	    // {
+		// 	header("location:BorrarEdificios.php");
+	    // }
+	    // if(isset($_POST['Medificio'])) 
+	    // {
+		// 	header("location:ModificarEdificio.php");
+	    // }
+	    // if(isset($_POST['cerrar'])) 
+    	// {
+		// 	$usuario = $user;
+		// 	echo $usuario;
+		// 	$query = "UPDATE usuarios SET Online = '0' WHERE Nombre = '$usuario'";
+		// 	$result = mysqli_query($conexion, $query) or die(mysql_error());
+		// 	$query = "SELECT Online FROM usuarios WHERE Nombre = '$user'";
+		// 	$result = mysqli_query($conexion, $query) or die(mysql_error());
+		// 	while ($row = $result->fetch_assoc()) 
+		// 	{
+		// 		$user = $row['Online']."<br>";
+		// 	}
+		// 	header("location:Index.php");
+    	// }
 	?>
